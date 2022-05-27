@@ -36,10 +36,10 @@ vcan.height = field_h;
 let camera_x = 0;
 let camera_y = 0;
 
-ctx.mozimageSmoothingEnabled = false; 
-ctx.webkitimageSmoothingEnabled = false; 
-ctx.msimageSmoothingEnabled = false; 
-ctx.imageSmoothingEnabled = false; 
+vctx.mozimageSmoothingEnabled = false; 
+vctx.webkitimageSmoothingEnabled = false; 
+vctx.msimageSmoothingEnabled = false; 
+vctx.imageSmoothingEnabled = false; 
 
 //愛すべきオブジェクトたち
 let star    = []; //配列リテラルが空であることを宣言する
@@ -85,8 +85,8 @@ document.body.onclick = own.update();
 function drawAll(){
     vctx.fillStyle = "#19151D"; //塗りつぶす色の指定
     vctx.fillRect(camera_x,camera_y,screen_w,screen_h); //塗りつぶす範囲の指定
-    //実画面ではなく仮想画面に映すのでvctx
-    // vctx.disp();
+    //実画面ではなく仮想画面に映すのでvcontext
+    // vcontext.disp();
 
     // for(let i=0; i<star_max; i++) star[i].draw(); //drawメソッドを呼び出す
     // //drawSprite(0, 0<<8, 0<<8);はclass ownのdraw()に移す
@@ -105,6 +105,14 @@ function drawAll(){
     camera_y = (own.y>>8)/field_h * (field_h-screen_h);
     //ここ理解不能 くそむず
 
+    vctx.moveTo( 0, 288 ) ;
+    vctx.lineTo( 1000, 288 );
+    vctx.moveTo( 0, 650 ) ;
+    vctx.lineTo( 1000, 650 );
+    vctx.strokeStyle = "red" ;
+    vctx.lineWidth = 2 ;
+    vctx.stroke() ;
+
     //仮想画面から実際のキャンバスにコピー
     ctx.drawImage( //使用範囲を指定してイメージを描画する際に使用する( .drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh) )
         vcan, camera_x, camera_y, screen_w, screen_h,
@@ -121,16 +129,6 @@ function gameLoop(){ //一定時間に決まった回数だけ繰り返すルー
     drawAll();
 }
 
-let ownY = camera_y - own.y;
-
-function putInfo(){
-    if(debug){ //
-        ctx.font = "40px 'Impact"; //font-sizeとfont-family
-        ctx.fillStyle = "white";
-        // ctx.fillText() 20,64);
-    }
-}
-
 //オンロードでゲーム開始
 // let btn = document.getElementById('btn');
 // btn.addEventListener('click', function(){
@@ -145,19 +143,9 @@ function putInfo(){
             document.addEventListener('touchmove', disableScroll, { passive: false });
             document.addEventListener('mousewheel', disableScroll, { passive: false });
         }
-        if( ownY > 0<<8 ){
-            vctx.font = "40px 'Impact"; 
-            vctx.fillStyle = "white";
-            vctx.fillText('ゴール&クリア！', field_w/2<<8,field_h/2<<8);
-            location.href = "#";
-            alert("時間切れ");
-        }
         window.setTimeout(function(){
             alert("時間切れ");
-            vctx.font = "40px 'Impact"; 
-            vctx.fillStyle = "white";
-            vctx.fillText('時間切れです', 20,60);
             location.href = "#";
-        }, 15000);
+        }, 10000);
     }
 // });

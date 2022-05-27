@@ -10,6 +10,13 @@ body{
 #can{
 	display: block;
 }
+
+#time2{
+    float: left;
+    background-color: red;
+    size: 200px;
+}
+
 body, .canvas_wrapper{
     min-height: 100vh;
 	width: 100%;
@@ -21,7 +28,7 @@ p,form{
 }
 
 p{
-    color: white;
+    color: red;
     font-family: 'Courier New', Courier, monospace;
 }
 
